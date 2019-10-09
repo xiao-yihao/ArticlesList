@@ -10,8 +10,9 @@ import UIKit
 import AVKit
 
 class MoviePlayerCell: UITableViewCell {
-    var playerView: PlayerView!
-    var thumbnailImageView: UIImageView!
+    var playerView = PlayerView()
+    var thumbnailImageView = UIImageView()
+    var titleLabel = UILabel()
     var timeObserve: Any?
     
     required init?(coder aDecoder: NSCoder) {
@@ -24,22 +25,19 @@ class MoviePlayerCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
         
-        playerView = PlayerView()
-        thumbnailImageView = UIImageView()
         addSubviews()
+        configureSubviews()
         addConstraints()
         
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerView.player?.currentItem, queue: nil) { [weak self] (_) in
             self?.playerView.player?.seek(to: CMTime.zero)
             self?.playerView.player?.play()
         }
-        
     }
 
     func set(cellData: CellData) {
-
         thumbnailImageView.image = UIImage(url: cellData.thumbnail)
-
+        titleLabel.text = cellData.movieName
         if playerView.playerLayer.player == nil {
             let url = NSURL(string: cellData.movieUrl);
             let avPlayer = AVPlayer(url: url! as URL);
@@ -59,23 +57,37 @@ class MoviePlayerCell: UITableViewCell {
     func addSubviews() {
         contentView.addSubview(playerView)
         contentView.addSubview(thumbnailImageView)
+        contentView.addSubview(titleLabel)
     }
 
+    func configureSubviews() {
+        titleLabel.textColor = .white
+        titleLabel.backgroundColor = .clear
+        titleLabel.textAlignment = .center
+        titleLabel.font = .systemFont(ofSize: 20)
+        
+        thumbnailImageView.clipsToBounds = true
+    }
+    
     func addConstraints() {
         playerView.translatesAutoresizingMaskIntoConstraints = false
         thumbnailImageView.translatesAutoresizingMaskIntoConstraints = false
-
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            playerView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 15 * 2),
-            playerView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            playerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            playerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            playerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            playerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            playerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             playerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
+            playerView.heightAnchor.constraint(equalTo: playerView.widthAnchor),
+
             thumbnailImageView.topAnchor.constraint(equalTo: playerView.topAnchor),
             thumbnailImageView.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
             thumbnailImageView.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
-            thumbnailImageView.bottomAnchor.constraint(equalTo: playerView.bottomAnchor)
+            thumbnailImageView.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: playerView.leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: playerView.trailingAnchor, constant: -10),
+            titleLabel.bottomAnchor.constraint(equalTo: playerView.bottomAnchor, constant: -30)
         ])
     }
     

@@ -34,7 +34,7 @@ private extension ViewController {
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .systemGray5
+        tableView.backgroundColor = .groupTableViewBackground
     }
     
     func addSubViews() {

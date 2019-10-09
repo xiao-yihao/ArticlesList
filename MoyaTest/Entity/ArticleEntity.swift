@@ -20,7 +20,7 @@ struct Item: Codable {
 struct Article: Codable {
     let id: String
     let title: String
-    let icon: String
+    let icon: String?
     var is_ads: Bool?
     var movie_cook_name: String?
     var screen_name: String?
