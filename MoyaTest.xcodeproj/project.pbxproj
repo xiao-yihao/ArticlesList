@@ -14,6 +14,7 @@
 		7F5B8AFA234C9014006D7A6B /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B8AF9234C9014006D7A6B /* ArticleCell.swift */; };
 		7F5B8AFC234C9316006D7A6B /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5B8AFB234C9316006D7A6B /* UIImage+.swift */; };
 		7F5D1275234DAD08006F8979 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D1274234DAD08006F8979 /* CellData.swift */; };
+		7F638816234DC772005B6991 /* ArticleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F638815234DC772005B6991 /* ArticleService.swift */; };
 		7FF861142345D2C4000E481B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861132345D2C4000E481B /* AppDelegate.swift */; };
 		7FF861162345D2C4000E481B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861152345D2C4000E481B /* SceneDelegate.swift */; };
 		7FF861182345D2C4000E481B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861172345D2C4000E481B /* ViewController.swift */; };
@@ -33,7 +34,7 @@
 		7FF861622345DE46000E481B /* ArticleEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861612345DE46000E481B /* ArticleEntity.swift */; };
 		7FF861632345E29D000E481B /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF861532345DCC8000E481B /* RxRelay.framework */; };
 		7FF861662345E454000E481B /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861652345E454000E481B /* String+.swift */; };
-		7FF861692345E4F9000E481B /* ArticleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861682345E4F9000E481B /* ArticleService.swift */; };
+		7FF861692345E4F9000E481B /* ArticleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF861682345E4F9000E481B /* ArticleProvider.swift */; };
 		BA34525B215A218A78DD709A /* Pods_MoyaTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF0973CEA24998A32A42E35 /* Pods_MoyaTest.framework */; };
 		EC9992204D05E63CEC25E652 /* Pods_MoyaTestTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F0AAE18D50B4F9A75FC5CA0 /* Pods_MoyaTestTests.framework */; };
 		EDF23CC673FE95D7135FB349 /* Pods_MoyaTest_MoyaTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAD406AB04B9DD7BF5E55E7 /* Pods_MoyaTest_MoyaTestUITests.framework */; };
@@ -69,6 +70,7 @@
 		7F5B8AF9234C9014006D7A6B /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		7F5B8AFB234C9316006D7A6B /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		7F5D1274234DAD08006F8979 /* CellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
+		7F638815234DC772005B6991 /* ArticleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleService.swift; sourceTree = "<group>"; };
 		7FF861102345D2C4000E481B /* MoyaTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoyaTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF861132345D2C4000E481B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FF861152345D2C4000E481B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,7 +98,7 @@
 		7FF861582345DCC8000E481B /* RxBlocking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxBlocking.framework; path = Carthage/Build/iOS/RxBlocking.framework; sourceTree = "<group>"; };
 		7FF861612345DE46000E481B /* ArticleEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleEntity.swift; sourceTree = "<group>"; };
 		7FF861652345E454000E481B /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
-		7FF861682345E4F9000E481B /* ArticleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleService.swift; sourceTree = "<group>"; };
+		7FF861682345E4F9000E481B /* ArticleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleProvider.swift; sourceTree = "<group>"; };
 		9D34E2D38A77E90D1DE86145 /* Pods-MoyaTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTestTests.release.xcconfig"; path = "Target Support Files/Pods-MoyaTestTests/Pods-MoyaTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		A18B19D47ED2BE59DABA0FC3 /* Pods-MoyaTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTest.release.xcconfig"; path = "Target Support Files/Pods-MoyaTest/Pods-MoyaTest.release.xcconfig"; sourceTree = "<group>"; };
 		DBAD406AB04B9DD7BF5E55E7 /* Pods_MoyaTest_MoyaTestUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoyaTest_MoyaTestUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,7 +278,8 @@
 		7FF861672345E488000E481B /* APIService */ = {
 			isa = PBXGroup;
 			children = (
-				7FF861682345E4F9000E481B /* ArticleService.swift */,
+				7FF861682345E4F9000E481B /* ArticleProvider.swift */,
+				7F638815234DC772005B6991 /* ArticleService.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -565,11 +568,12 @@
 				7F5D1275234DAD08006F8979 /* CellData.swift in Sources */,
 				7F5B8AF3234C3DCE006D7A6B /* UITableView+.swift in Sources */,
 				7FF861182345D2C4000E481B /* ViewController.swift in Sources */,
-				7FF861692345E4F9000E481B /* ArticleService.swift in Sources */,
+				7FF861692345E4F9000E481B /* ArticleProvider.swift in Sources */,
 				7FF861622345DE46000E481B /* ArticleEntity.swift in Sources */,
 				7FF861662345E454000E481B /* String+.swift in Sources */,
 				7FF861142345D2C4000E481B /* AppDelegate.swift in Sources */,
 				7FF861162345D2C4000E481B /* SceneDelegate.swift in Sources */,
+				7F638816234DC772005B6991 /* ArticleService.swift in Sources */,
 				7F5B8AFC234C9316006D7A6B /* UIImage+.swift in Sources */,
 				7F5B8AF8234C780F006D7A6B /* Array+.swift in Sources */,
 				7F5B8AFA234C9014006D7A6B /* ArticleCell.swift in Sources */,

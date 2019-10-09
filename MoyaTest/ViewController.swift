@@ -7,19 +7,11 @@
 //
 
 import UIKit
-import Moya
-import RxMoya
 import RxSwift
-import SwiftyJSON
-
-
-let articleProvider = MoyaProvider<ArticleService>()
 
 class ViewController: UIViewController {
     let disposeBag = DisposeBag()
-
     let tableView = UITableView()
-    
     var dataSource: [CellData] = []
     
     override func viewDidLoad() {
@@ -28,8 +20,54 @@ class ViewController: UIViewController {
         addSubViews()
         configueSubViews()
         addConstraints()
-        
         requestAPI()
+    }
+}
+
+private extension ViewController {
+    func configueSubViews() {
+        tableView.registerCell(type: MoviePlayerCell.self)
+        tableView.registerCell(type: ArticleCell.self)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemGray5
+    }
+    
+    func addSubViews() {
+        view.addSubview(tableView)
+    }
+    
+    func addConstraints() {
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    func requestAPI() {
+        ArticleService().articlesList { [weak self] (resultEntity, error) in
+            guard let self = self else { return }
+            if let _ = error {
+                // エラー処理
+            } else {
+                self.applyData(resultEntity: resultEntity)
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    func applyData(resultEntity: ResultEntity?) {
+        self.dataSource = resultEntity?.data.compactMap({ (item) -> CellData in
+            return CellData(item: item)
+        }) ?? []
     }
 }
 
@@ -60,62 +98,5 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let videoCell = cell as? MoviePlayerCell else { return };
         videoCell.playerView.player?.pause();
-        videoCell.thumbnailImageView.isHidden = false
-    }
-}
-
-private extension ViewController {
-    func configueSubViews() {
-        tableView.registerCell(type: MoviePlayerCell.self)
-        tableView.registerCell(type: ArticleCell.self)
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .systemGray5
-              
-    }
-    
-    func addSubViews() {
-        view.addSubview(tableView)
-    }
-    
-    func addConstraints() {
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
-    
-    func requestAPI() {
-
-        articleProvider.rx.request(.articles).subscribe { [weak self] event in
-            guard let self = self else { return }
-            switch event {
-            case .success(let response):
-                let data = response.data
-                let resultEntity = try? JSONDecoder().decode(ResultEntity.self, from: data)
-                self.applyData(resultEntity: resultEntity)
-                self.tableView.reloadData()
-            case .error(let error):
-                print(error.localizedDescription)
-                break
-                
-            }
-
-        }.disposed(by: disposeBag)
-        
-    }
-    
-    func applyData(resultEntity: ResultEntity?) {
-        self.dataSource = resultEntity?.data.compactMap({ (item) -> CellData in
-            return CellData(item: item)
-        }) ?? []
     }
 }

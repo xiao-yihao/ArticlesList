@@ -1,51 +1,30 @@
+//
+//  ArticleService.swift
+//  MoyaTest
+//
+//  Created by 肖 怡豪 on 2019/10/09.
+//  Copyright © 2019 肖 怡豪. All rights reserved.
+//
 
+import Foundation
 import Moya
 import RxMoya
+import RxSwift
+import SwiftyJSON
 
-enum ArticleService {
-    case articles
+class ArticleService {
+    let articleProvider = MoyaProvider<ArticleProvider>()
     
-}
-
-extension ArticleService: TargetType {
-    
-    var baseURL: URL {
-        switch self {
-        case .articles:
-            return URL(string: "http://104.198.124.217/employment/articles.json")!
+    func articlesList(completion: @escaping (ResultEntity?, Error?) -> ()) {
+        let _ = articleProvider.rx.request(.articles).subscribe { event in
+            switch event {
+            case .success(let response):
+                let data = response.data
+                let resultEntity = try? JSONDecoder().decode(ResultEntity.self, from: data)
+                return completion(resultEntity, nil)
+            case .error(let error):
+                completion(nil, error)
+            }
         }
     }
-    
-    var path: String {
-        switch self {
-         case .articles:
-            return ""
-        }
-    }
-    
-    var method: Moya.Method {
-        switch self {
-         case .articles:
-            return .get
-        }
-    }
-    var task: Task {
-        switch self {
-         case .articles:
-            return .requestPlain
-        }
-    }
-    
-    
-    var sampleData: Data {
-        switch self {
-        case .articles:
-            return "".data(using: String.Encoding.utf8)!
-        }
-    }
-    
-    var headers: [String : String]? {
-        return ["Content-Type":"application/json;charset=utf-8"]
-    }
-    
 }

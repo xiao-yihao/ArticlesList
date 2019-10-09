@@ -12,7 +12,11 @@ import AVKit
 class MoviePlayerCell: UITableViewCell {
     var playerView: PlayerView!
     var thumbnailImageView: UIImageView!
+    var timeObserve: Any?
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,17 +27,13 @@ class MoviePlayerCell: UITableViewCell {
         playerView = PlayerView()
         thumbnailImageView = UIImageView()
         addSubviews()
-        configureSubviews()
         addConstraints()
         
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: playerView.player?.currentItem, queue: nil) { [weak self] (_) in
             self?.playerView.player?.seek(to: CMTime.zero)
             self?.playerView.player?.play()
         }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        
     }
 
     func set(cellData: CellData) {
@@ -44,18 +44,21 @@ class MoviePlayerCell: UITableViewCell {
             let url = NSURL(string: cellData.movieUrl);
             let avPlayer = AVPlayer(url: url! as URL);
             playerView.playerLayer.player = avPlayer;
+            
+            timeObserve = playerView.player?.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.5, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil, using: { [weak self] _ in
+                if self?.playerView.player?.timeControlStatus == .waitingToPlayAtSpecifiedRate {
+                    self?.thumbnailImageView.isHidden = false
+                } else if self?.playerView.player?.timeControlStatus == .playing {
+                    self?.thumbnailImageView.isHidden = true
+                }
+            })
         }
-        thumbnailImageView.isHidden = true
-        playerView.player?.play();
-        
+        playerView.player?.play()
     }
 
     func addSubviews() {
         contentView.addSubview(playerView)
         contentView.addSubview(thumbnailImageView)
-    }
-
-    func configureSubviews() {
     }
 
     func addConstraints() {
@@ -75,5 +78,10 @@ class MoviePlayerCell: UITableViewCell {
             thumbnailImageView.bottomAnchor.constraint(equalTo: playerView.bottomAnchor)
         ])
     }
+    
+    deinit {
+        timeObserve = nil
+    }
+    
 }
 
