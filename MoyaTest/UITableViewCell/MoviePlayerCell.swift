@@ -36,7 +36,7 @@ class MoviePlayerCell: UITableViewCell {
     }
 
     func set(cellData: CellData) {
-        thumbnailImageView.image = UIImage(url: cellData.thumbnail)
+        thumbnailImageView.loadImageAsynchronously(url: URL(string: cellData.thumbnail))
         titleLabel.text = cellData.movieName
         if playerView.playerLayer.player == nil {
             let url = NSURL(string: cellData.movieUrl);
